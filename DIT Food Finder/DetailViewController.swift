@@ -8,35 +8,68 @@
 
 import UIKit
 
-class DetailViewController: UIViewController {
+class DetailViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
-    @IBOutlet weak var detailName: UILabel!
-    @IBOutlet weak var detailAddress: UILabel!
-    @IBOutlet weak var detailType: UILabel!
+    @IBOutlet weak var detailTableView: UITableView!
     @IBOutlet weak var detailImage: UIImageView!
     
     var cellName = ""
     var cellAddress = ""
     var cellType = ""
     var cellImage = ""
-        
+    var cellMenu = ""
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        
+    // delegate와 UIViewController와 연결
+    detailTableView.delegate = self
+    detailTableView.dataSource = self
+        
         self.title = cellName
-        detailName.text = cellName
-        detailAddress.text = cellAddress
-        detailType.text = cellType
+        
+        //detailName.text = cellName
+        //detailAddress.text = cellAddress
+        //detailType.text = cellType
+        
         detailImage.image = UIImage(named: cellImage)
         
     }
 
+    func numberOfSection(in tableView: UITableView) -> Int {
+        return 1
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 4
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        switch indexPath.row {
+        case 0:
+            let cell = tableView.dequeueReusableCell(withIdentifier: "detailCell", for: indexPath)
+            cell.textLabel?.text = cellAddress
+        case 1:
+            let cell = tableView.dequeueReusableCell(withIdentifier: "detailCell", for: indexPath)
+            cell.textLabel?.text = cellType
+        case 2:
+            let cell = tableView.dequeueReusableCell(withIdentifier: "detailCell", for: indexPath)
+            cell.textLabel?.text = cellMenu
+        default:
+            <#code#>
+        }
+    }
+    
+    func tableView(_ tableVeiw: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableVeiw.dequeueReusableCell(withIdentifier: "detailCell", for: indexPath)
+        cell.textLabel?.text = cellAddress
+        return cell
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
 
     /*
     // MARK: - Navigation
